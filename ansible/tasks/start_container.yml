@@ -1,0 +1,21 @@
+- name: "Start the container for Production (Blue)"
+  become: True
+  docker_container:
+    name: blue
+    image: "{{ docker_repo }}:blue"
+    ports:
+      - 3000:3000
+    state: started
+  when: deploy_env == "blue"
+  ignore_errors: True
+
+- name: "Start the container for Beta (Green)"
+  become: True
+  docker_container:
+    name: green
+    image: "{{ docker_repo }}:green"
+    ports:
+      - 3001:3000
+    state: started
+  when: deploy_env == "green"
+  ignore_errors: True

@@ -1,0 +1,30 @@
+dist: trusty
+sudo: required
+
+language: node_js
+
+services:
+  - docker
+
+before_install:
+  # Make sure everything's up to date.
+  - sudo apt-get update -qq
+
+install:
+  # Install Ansible.
+  - sudo pip install ansible
+  # Install sshpass
+  - sudo apt-get install -y sshpass
+
+script:
+    # - npm test # Uncomment when testsuite is ready
+
+deploy:
+  - provider: script
+    script: bash deploy.sh blue
+    on:
+      branch: master
+  - provider: script
+    script: bash deploy.sh green
+    on:
+      branch: beta
